@@ -31,6 +31,7 @@ class Book(models.Model):
     num_pages = models.PositiveSmallIntegerField()
     publication_date = models.DateField()
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
+    description = models.TextField(default=" ")
 
     def __str__(self):
         return self.book_title

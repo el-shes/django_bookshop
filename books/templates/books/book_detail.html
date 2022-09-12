@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ book.book_title }}</title>
+</head>
+<body>
+<h1>{{ book.book_title }}</h1>
+<div></div>
+<p>
+    The book is written by {{ book.book_author.first_name }} {{ book.book_author.last_name }}.
+    It was published on {{ book.publication_date }} by {{ book.publisher }}.
+    Total pages - {{ book.num_pages }}.
+</p>
+</body>
+</html>
