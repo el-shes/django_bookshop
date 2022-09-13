@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+    <nav class="navbar navbar-default navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">{{ settings.APP_NAME }}</a>
+            </div>
+            <ul class="nav navbar-nav">
+                {% url 'books:books_home' as home %}
+                <li {% if request.get_full_path == home %}class="active"{% endif %}>
+                    <a href="{% url 'books:books_home' %}">Home</a></li>
+            </ul>
+            <ul class="nav navbar-nav ">
+                {% url 'ads' as ads %}
+                <li {% if request.get_full_path == ads %}class="active"{% endif %}>
+                    <a href="{% url 'ads:all' %}">Ads</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">See more <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{% url 'polls:index' %}">Polls</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                        <img style="width: 25px;" src="{{ user|gravatar:60 }}"/><b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'logout' %}?next={% url 'ads:all' %}">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+{% endblock %}
+
