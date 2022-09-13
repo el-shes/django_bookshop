@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import TemplateView, DetailView, CreateView, DeleteView, UpdateView
-from .models import Book
+from django.views.generic import TemplateView, DetailView, CreateView, DeleteView, UpdateView, ListView
+from .models import Book, Author
 from django.db.models import Q
 
 
@@ -31,7 +31,7 @@ class BookListView(View):
             authors = []
             for author in book.book_author.all():
                 authors.append("{0} {1}".format(author.author_first_name, author.author_last_name))
-            book.book_author_updated = authors
+            book.book_author_updated = ", ".join(authors)
         book_list = search_result
         ctx = {'book_list': book_list}
         return render(request, self.template_name, ctx)
@@ -57,3 +57,13 @@ class EditBookView(UpdateView):
 class DeleteBookView(DeleteView):
     model = Book
 
+
+class AuthorListView(ListView):
+    model = Author
+    template_name = "authors/author_list.html"
+
+
+class CreateAuthorView(CreateView):
+    model = Author
+    template_name = 'authors/create_author.html'
+    fields = '__all__'
