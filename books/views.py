@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView
-from .models import Book, Author
+from django.views.generic import TemplateView, DetailView, CreateView, DeleteView, UpdateView
+from .models import Book
 from django.db.models import Q
 
 
@@ -16,7 +16,7 @@ class BookListView(View):
 
     def get(self, request, authors=None):
         """
-        Search page request. If not all books are displayed.
+        Search page request by book title. If not all books are displayed.
         :param request:
         :param authors: gets updated to display author_first_name and author_last_name
         :return: rendered page
@@ -41,10 +41,19 @@ class BookDetailedView(DetailView):
     model = Book
     template_name = "books/book_detail.html"
 
-#     def get_queryset(self):
-#         query = self.request.GET.get('search_box', False)
-#         if query:
-#             object_list = Book.objects.filter(book_author__book__book_title__icontains=query)
-#             return object_list
-#         # object_list = Book.objects.filter(Q(book_title__icontains=query))
-#         # return object_list
+
+class CreateBookView(CreateView):
+    model = Book
+    template_name = "books/book_create.html"
+    fields = '__all__'
+
+
+class EditBookView(UpdateView):
+    model = Book
+    template_name = "books/book_edit.html"
+    fields = '__all__'
+
+
+class DeleteBookView(DeleteView):
+    model = Book
+

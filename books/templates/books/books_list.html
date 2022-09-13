@@ -22,10 +22,19 @@
 
 <ul>
     {% for book in book_list %}
-        <li><a href={% url 'books:book_detail' book.id %}> {{ book.book_title }}</a> by {{ book.book_author_updated }}</li>
+        <li>
+            <a href={% url 'books:book_detail' book.id %}> {{ book.book_title }}</a> by {{ book.book_author_updated }}
+            <a href={% url 'books:book_edit' book.id %}>Edit</a>
+            <a href="{% url 'books:book_delete' book.id %}">Delete</a>
+        </li>
     {% empty %}
-    <li>No books yet.</li>
+        <li>No books yet.</li>
     {% endfor %}
 </ul>
+
+<p>
+    <a href="{% url 'books:book_create' %}">Add an New Book</a>
+</p>
+
 </body>
 </html>
