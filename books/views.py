@@ -95,10 +95,21 @@ class DeleteAuthorView(DeleteView):
     template_name = 'authors/author_confirm_delete.html'
 
 
-class PublisherListView(ListView):
+class PublisherListView(View):
     model = Publisher
     template_name = 'publishers/publisher_list.html'
     ordering = ['publisher_name']
+
+    def get(self, request):
+        query = request.GET.get("search", False)
+        if query:
+            search_result = Publisher.objects.filter(publisher_name__icontains=query).select_related()
+        else:
+            search_result = Publisher.objects.all()
+
+        publisher_list = search_result
+        ctx = {'publisher_list': publisher_list}
+        return render(request, self.template_name, ctx)
 
 
 class PublisherDetailView(DetailView):

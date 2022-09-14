@@ -3,9 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Publisher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <h2>All Publishing Houses</h2>
+
+<div style="float:right">
+    <form>
+        <input type="text" placeholder="Search.." name="search"
+                {% if search %} value="{{ search }}" {% endif %}>
+        <button type="submit"><i class="fa fa-search"></i></button>
+        <a href="{% url 'books:all_publishers' %}"><i class="fa fa-undo"></i></a>
+    </form>
+</div>
+
 <ul>
     {% for publisher in publisher_list %}
         <li>
