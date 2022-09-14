@@ -65,5 +65,16 @@ class AuthorListView(ListView):
 
 class CreateAuthorView(CreateView):
     model = Author
-    template_name = 'authors/create_author.html'
+    template_name = 'authors/author_create.html'
     fields = '__all__'
+
+
+class EditAuthorView(UpdateView):
+    model = Author
+    template_name = 'authors/author_edit.html'
+    fields = '__all__'
+
+
+class DeleteAuthorView(DeleteView):
+    model = Author
+    template_name = 'authors/author_confirm_delete.html'

@@ -8,8 +8,18 @@
 <h2>Check out our Authors</h2>
 <ul>
     {% for author in author_list %}
-        <li>{{ author.author_first_name }} {{ author.author_last_name }}</li>
+        <li>
+            {{ author.author_first_name }} {{ author.author_last_name }}
+            <a href={% url 'books:author_edit' author.id %}>Edit</a>
+            <a href={% url 'books:author_delete' author.id %}>Delete</a>
+        </li>
     {% endfor %}
 </ul>
+
+
+<p>
+    <a href="{% url 'books:author_create' %}">Add an New Author</a>
+</p>
+
 </body>
 </html>

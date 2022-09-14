@@ -15,5 +15,7 @@ urlpatterns = [
 
     path('author', views.AuthorListView.as_view(), name='all_authors'),
     path('author/new', views.CreateAuthorView.as_view(success_url=reverse_lazy('books:all_authors')), name='author_create'),
+    path('author/<int:pk>/edit', views.EditAuthorView.as_view(success_url=reverse_lazy('books:all_authors')), name='author_edit'),
+    path('author/<int:pk>/delete', views.DeleteAuthorView.as_view(success_url=reverse_lazy('books:all_authors')), name='author_delete'),
 
 ]
