@@ -3,9 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Authors</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <h2>Check out our Authors</h2>
+
+<div style="float:right">
+    <form>
+        <input type="text" placeholder="Search.." name="search"
+                {% if search %} value="{{ search }}" {% endif %}>
+        <button type="submit"><i class="fa fa-search"></i></button>
+        <a href="{% url 'books:all_authors' %}"><i class="fa fa-undo"></i></a>
+    </form>
+</div>
+
 <ul>
     {% for author in author_list %}
         <li>
@@ -13,6 +24,8 @@
             <a href={% url 'books:author_edit' author.id %}>Edit</a>
             <a href={% url 'books:author_delete' author.id %}>Delete</a>
         </li>
+    {% empty %}
+        <li>No authors yet.</li>
     {% endfor %}
 </ul>
 

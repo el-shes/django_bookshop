@@ -10,7 +10,7 @@ class Author(models.Model):
 
 
 class BookLanguage(models.Model):
-    LANGUAGES = [('Eng', 'English'), ('Fr', 'French'), ('UA', 'Ukrainian')]
+    LANGUAGES = [('ENG', 'English'), ('FR', 'French'), ('UA', 'Ukrainian')]
     language_name = models.CharField(max_length=3, choices=LANGUAGES)
 
     def __str__(self):

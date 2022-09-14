@@ -58,9 +58,24 @@ class DeleteBookView(DeleteView):
     model = Book
 
 
-class AuthorListView(ListView):
+class AuthorListView(View):
     model = Author
     template_name = "authors/author_list.html"
+
+    def get(self, request):
+        """
+        If search request - return search result. If not - all author list
+        :param request:
+        :return: author list
+        """
+        query = request.GET.get("search", False)
+        if query:
+            objects = Author.objects.filter(Q(author_first_name__icontains=query) | Q(author_last_name__icontains=query))
+        else:
+            objects = Author.objects.all()
+        author_list = objects
+        ctx = {'author_list': author_list}
+        return render(request, self.template_name, ctx)
 
 
 class CreateAuthorView(CreateView):
