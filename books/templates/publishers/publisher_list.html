@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Publisher</title>
+</head>
+<body>
+<h2>All Publishing Houses</h2>
+<ul>
+    {% for publisher in publisher_list %}
+        <li>
+            <a href={% url 'books:publisher_detail' publisher.id %}>{{ publisher.publisher_name }}</a>
+            <a href={% url 'books:publisher_edit' publisher.id %}>Edit</a>
+            <a href={% url 'books:publisher_delete' publisher.id %}>Delete</a>
+        </li>
+    {% endfor %}
+</ul>
+</body>
+</html>

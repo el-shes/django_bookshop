@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView, DetailView, CreateView, DeleteView, UpdateView, ListView
-from .models import Book, Author
+from .models import Book, Author, Publisher
 from django.db.models import Q
 
 
@@ -12,7 +12,7 @@ class HomeView(TemplateView):
 
 class BookListView(View):
     model = Book
-    template_name = "books/books_list.html"
+    template_name = "books/book_list.html"
 
     def get(self, request, authors=None):
         """
@@ -93,3 +93,25 @@ class EditAuthorView(UpdateView):
 class DeleteAuthorView(DeleteView):
     model = Author
     template_name = 'authors/author_confirm_delete.html'
+
+
+class PublisherListView(ListView):
+    model = Publisher
+    template_name = 'publishers/publisher_list.html'
+    ordering = ['publisher_name']
+
+
+class PublisherDetailView(DetailView):
+    model = Publisher
+    template_name = 'publishers/publisher_detail.html'
+
+
+class EditPublisherView(UpdateView):
+    model = Publisher
+    template_name = 'publishers/publisher_edit.html'
+    fields = '__all__'
+
+
+class DeletePublisherView(DeleteView):
+    model = Publisher
+    template_name = 'publishers/publisher_confirm_delete.html'

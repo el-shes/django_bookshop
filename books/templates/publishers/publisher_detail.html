@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ publisher.publisher_name }}</title>
+</head>
+<body>
+<h4>Check out all the books published by {{ publisher.publisher_name }}</h4>
+
+<ul>
+    {% for book in publisher.book_set.all  %}
+        <li>
+            {{ book.book_title}}
+        </li>
+    {% endfor %}
+</ul>
+
+<p>
+    <button class="button" onclick="location.href='{% url 'books:all_publishers' %}'"> Go back</button>
+</p>
+
+</body>
+</html>
