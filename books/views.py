@@ -78,6 +78,11 @@ class AuthorListView(View):
         return render(request, self.template_name, ctx)
 
 
+class AuthorDetailView(DetailView):
+    model = Author
+    template_name = 'authors/author_detail.html'
+
+
 class CreateAuthorView(CreateView):
     model = Author
     template_name = 'authors/author_create.html'

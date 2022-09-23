@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ author.author_first_name }} {{ author.author_last_name }}</title>
+</head>
+<body>
+<h1>{{ author.author_first_name }} {{ author.author_last_name }}</h1>
+<div></div>
+<p>
+    See all the {{ author.author_first_name }} {{ author.author_last_name }}'s books:
+</p>
+<ul>
+    {% for book in author.book_set.all %}
+        <li>{{ book }}</li>
+    {% endfor %}
+</ul>
+</body>
+</html>
