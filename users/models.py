@@ -9,7 +9,7 @@ class User(AbstractUser):
         CUSTOMER = "CUSTOMER", 'Customer'
         MANAGER = "MANAGER", 'Manager'
 
-    base_role = Role.ADMIN
+    base_role = Role.CUSTOMER
 
     role = models.CharField(max_length=50, choices=Role.choices)
 

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All orders</title>
+</head>
+<body>
+<h1> List of all Orders for Manager</h1>
+{% if customerorder_list %}
+{% for order in customerorder_list %}
+    {% for book in order.ordered_books.all %}
+        {{ book.book_title }} ordered by {{ order.customer }}
+    {% endfor %}
+{% endfor %}
+{% else %}
+    <p>No orders yet.</p>
+{% endif %}
+</body>
+</html>

@@ -1,3 +1,6 @@
 from django.contrib import admin
+from orders.models import BookState, OrderStatus, CustomerOrder
 
-# Register your models here.
+admin.site.register(OrderStatus)
+admin.site.register(BookState)
+admin.site.register(CustomerOrder)
