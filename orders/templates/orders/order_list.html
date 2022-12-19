@@ -6,14 +6,42 @@
 </head>
 <body>
 <h1> List of all Orders for Manager</h1>
-{% if customerorder_list %}
-{% for order in customerorder_list %}
-    {% for book in order.ordered_books.all %}
-        {{ book.book_title }} ordered by {{ order.customer }}
-    {% endfor %}
-{% endfor %}
-{% else %}
-    <p>No orders yet.</p>
-{% endif %}
+
+<div style="display: flex; flex-direction: column">
+    <div style="display: flex; flex-direction: row; justify-content: space-between">
+        <div style="float: left">
+            <button type="submit"><a href="{% url 'orders:new_order' %}">Create new order</a></button>
+        </div>
+        <div style="float:right ">
+            <form method="GET">
+                <input type="text" placeholder="Search.." name="q"
+                        {% if q %} value="{{ request.GET.q }}" {% endif %}
+                >
+                <button type="submit">Submit</button>
+                <button type='submit'><a href="{% url 'orders:all_orders' %}">Undo</a></button>
+            </form>
+        </div>
+    </div>
+
+    <div style="display: block">
+        {% if customerorder_list %}
+            {% for order in customerorder_list %}
+                <p>
+                    {{ order.order_date }}
+                    {% for book in order.ordered_books.all %}
+                        {{ book.book_title }}
+                        {% if not forloop.last %}
+                            ,
+                        {% endif %}
+                    {% endfor %}
+                    ordered by <b>{{ order.customer.first_name }} {{ order.customer.last_name }} </b>
+                    <a href={% url 'orders:order_details' order.id %}>See details</a>
+                </p>
+            {% endfor %}
+        {% else %}
+            <p>No orders yet.</p>
+        {% endif %}
+    </div>
+</div>
 </body>
 </html>
