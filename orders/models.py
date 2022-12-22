@@ -26,7 +26,7 @@ class CustomerOrder(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.RESTRICT, related_name='created_by', null=True)
     customer = models.ForeignKey(Customer, on_delete=models.RESTRICT, related_name='customer', null=True)
     ordered_books = models.ManyToManyField(Book)
-    full_price = models.PositiveIntegerField(default=1)
+    full_price = models.FloatField(default=1.0)
 
     def __str__(self):
         return self.pk
