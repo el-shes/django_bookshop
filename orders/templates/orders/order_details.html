@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>#{{ customerorder.pk }} Order Detail</title>
+</head>
+<body>
+<h2> Order #{{ customerorder.pk }}, {{ customerorder.order_date }}</h2>
+<h4> by {{ customerorder.customer.first_name }} {{ customerorder.customer.last_name }}</h4>
+
+
+<div style="float:right ">
+    <!-- TODO: change order_status to dropdown menu -->
+    Status : {{ customerorder.order_status }}
+    <button type="submit">Change Status</button>
+</div>
+
+<div style="display: block">
+
+        <!-- # TODO: display the name of books ordered -->
+
+</div>
+
+<div>
+    Total price : {{ customerorder.full_price }}
+</div>
+
+</body>
+</html>
