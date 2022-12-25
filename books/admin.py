@@ -15,5 +15,7 @@ class PublisherAdmin(admin.ModelAdmin):
     search_fields = ['publisher_name__istartswith']
 
 
-admin.site.register(BookLanguage)
-admin.site.register(Book)
+@admin.register(BookLanguage)
+class BookLanguageAdmin(admin.ModelAdmin):
+    list_display = ['language_name']
+    search_fields = ['language_name__istartswith']
