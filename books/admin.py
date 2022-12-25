@@ -9,6 +9,11 @@ class AuthorAdmin(admin.ModelAdmin):
                      'author_last_name__istartswith']
 
 
-admin.site.register(Publisher)
+@admin.register(Publisher)
+class PublisherAdmin(admin.ModelAdmin):
+    list_display = ['publisher_name']
+    search_fields = ['publisher_name__istartswith']
+
+
 admin.site.register(BookLanguage)
 admin.site.register(Book)
