@@ -17,7 +17,13 @@
 
 <div style="display: block">
 
-        <!-- # TODO: display the name of books ordered -->
+    Books :
+    {% for book in customerorder.ordered_books.all %}
+        <div style="display: table-row">
+        {{ book }}
+        </div>
+    {% endfor %}
+
 
 </div>
 

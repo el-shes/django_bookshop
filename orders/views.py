@@ -1,8 +1,7 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.db.models import Q
 from django.views.generic import ListView, DetailView, CreateView
-from .models import BookState
+from .models import BookState, Book
 
 from orders.models import CustomerOrder
 
