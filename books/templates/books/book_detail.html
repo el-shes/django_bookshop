@@ -12,5 +12,13 @@
     It was published on {{ book.publication_date }} by {{ book.publisher }}.
     Total pages - {{ book.num_pages }}.
 </p>
+<p>
+    {%  for book_state in book.bookstate_set.all %}
+        Price - {{ book_state.book_price }}
+        <p>
+        Books left - {{ book_state.book_quantity }}
+        </p>
+    {% endfor %}
+</p>
 </body>
 </html>
