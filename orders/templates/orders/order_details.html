@@ -10,26 +10,33 @@
 
 
 <div style="float:right ">
-    <!-- TODO: change order_status to dropdown menu -->
     Status : {{ customerorder.order_status }}
-    <button type="submit">Change Status</button>
 </div>
 
 <div style="display: block">
 
     Books :
-    {% for book in customerorder.ordered_books.all %}
-        <div style="display: table-row">
-        {{ book }}
-        </div>
-    {% endfor %}
-
+    <ul>
+        {% for book in customerorder.ordered_books.all %}
+            <li>{{ book }}</li>
+        {% endfor %}
+    </ul>
 
 </div>
 
 <div>
     Total price : {{ customerorder.full_price }}
 </div>
+
+<div>
+    {% if customerorder.order_status_id == 1  %}
+        <button type="submit"><a href="{% url 'orders:order_confirm' customerorder.id %}"> Confirm Order</a></button>
+    {% else %}
+        <button type="submit">Complete</button>
+    {% endif %}
+    <button type="submit">Cancel</button>
+</div>
+
 
 </body>
 </html>

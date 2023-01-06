@@ -1,7 +1,8 @@
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.db.models import Q
 from django.views.generic import ListView, DetailView, CreateView
-from .models import BookState, Book
+from .models import BookState
 
 from orders.models import CustomerOrder
 
@@ -24,6 +25,11 @@ class OrdersView(ListView):
         return object_list
 
 
+class DetailOrder(DetailView):
+    model = CustomerOrder
+    template_name = 'orders/order_details.html'
+
+
 class CreateOrder(CreateView):
     model = CustomerOrder
     template_name = 'orders/create_order.html'
@@ -40,6 +46,7 @@ class CreateOrder(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class DetailOrder(DetailView):
-    model = CustomerOrder
-    template_name = 'orders/order_details.html'
+def confirm_order(request, **kwargs):
+    CustomerOrder.objects.filter(pk=kwargs['pk']).update(order_status_id=2)
+    customerorder = CustomerOrder.objects.get(pk=kwargs['pk'])
+    return render(request, 'orders/order_details.html', {'customerorder': customerorder})

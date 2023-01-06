@@ -7,4 +7,7 @@ urlpatterns = [
     path('all', views.OrdersView.as_view(), name='all_orders'),
     path('create_order/new', views.CreateOrder.as_view(success_url=reverse_lazy('orders:all_orders')), name='new_order'),
     path('all/<int:pk>/details', views.DetailOrder.as_view(), name='order_details'),
+
+    path('all/<int:pk>/confirm_order', views.confirm_order, name='order_confirm'),
+
 ]
