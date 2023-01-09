@@ -46,7 +46,7 @@ class CreateOrder(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-def confirm_order(request, **kwargs):
-    CustomerOrder.objects.filter(pk=kwargs['pk']).update(order_status_id=2)
+def update_order_status(request, *args, **kwargs):
+    CustomerOrder.objects.filter(pk=kwargs['pk']).update(order_status_id=kwargs['order_status_id'])
     customerorder = CustomerOrder.objects.get(pk=kwargs['pk'])
     return render(request, 'orders/order_details.html', {'customerorder': customerorder})

@@ -30,9 +30,9 @@
 
 <div>
     {% if customerorder.order_status_id == 1  %}
-        <button type="submit"><a href="{% url 'orders:order_confirm' customerorder.id %}"> Confirm Order</a></button>
+        <button type="submit"><a href="{% url 'orders:update_order_status' customerorder.id 2 %}"> Confirm Order</a></button>
     {% else %}
-        <button type="submit">Complete</button>
+        <button type="submit"><a href="{% url 'orders:update_order_status' customerorder.id 4 %} ">Complete </a></button>
     {% endif %}
     <button type="submit">Cancel</button>
 </div>
