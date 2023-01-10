@@ -9,7 +9,7 @@
 
 <div style="display: flex; flex-direction: column">
     <div style="display: flex; flex-direction: row; justify-content: space-between">
-            <div style="float: left">
+        <div style="float: left">
             <button type="submit"><a href="{% url 'orders:new_order' %}">Create new order</a></button>
         </div>
         <div style="float:right ">
@@ -21,6 +21,25 @@
                 <button type='submit'><a href="{% url 'orders:all_orders' %}">Undo</a></button>
             </form>
         </div>
+    </div>
+
+    <div class="form-group">
+        <div style="float: right">
+            <form method="GET">
+                {% for status in order_statuses %}
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" {% if status.status_value in marked_status %}checked{% endif %}
+                               class="custom-control-input" id="{{ status.status_value }}" name="order_status"
+                               value="{{ status.status_value }}">
+                        <label class="custom-control-label" for="{{ status.status_value }}"
+                               style="cursor: pointer;">{{ status.status_value }}</label>
+                    </div>
+                {% endfor %}
+                <button type="submit">Filter by Status</button>
+            </form>
+        </div>
+
+
     </div>
 
     <div style="display: block">

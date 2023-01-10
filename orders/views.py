@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.db.models import Q
 from django.views.generic import ListView, DetailView, CreateView
-from .models import BookState
+from .models import BookState, OrderStatus
 
 from orders.models import CustomerOrder
 
@@ -22,7 +22,16 @@ class OrdersView(ListView):
                                                     Q(customer__last_name__icontains=query))
         else:
             object_list = self.model.objects.all()
+
+        marked_status = self.request.GET.getlist('order_status')
+        if marked_status:
+            object_list = self.model.objects.filter(Q(order_status__status_value__in=marked_status))
         return object_list
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(OrdersView, self).get_context_data(**kwargs)
+        context['order_statuses'] = OrderStatus.objects.all()
+        return context
 
 
 class DetailOrder(DetailView):
