@@ -13,7 +13,8 @@ class BookState(models.Model):
 
 
 class OrderStatus(models.Model):
-    values = [('NEW', 'new'), ('CONFIRMED', 'confirmed'), ('CANCELLED', 'cancelled'), ('COMPLETED', 'completed')]
+    values = [('NEW', 'new'), ('CONFIRMED', 'confirmed'), ('CANCELLED', 'cancelled'), ('COMPLETED', 'completed'),
+              ('ILLEGIBLE', 'illegible')]
     status_value = models.CharField(max_length=200, choices=values, default='NEW')
 
     def __str__(self):
