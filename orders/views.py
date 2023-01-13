@@ -7,6 +7,8 @@ from .models import BookState, OrderStatus
 from orders.models import CustomerOrder
 
 CONFIRM_ORDER_STATUS_ID = 2
+CANCEL_ORDER_STATUS_ID = 3
+
 
 def count_total_price(list_of_prices):
     return sum(list_of_prices)
@@ -16,6 +18,7 @@ def update_order_status(request, *args, **kwargs):
     """
     when confirming order - validate quantity of books to order, update quantity and assign confirm status
     if not valid - assign status ILLEGIBLE
+    when order status is changed to cancel - book_quantity is added back up
     :param request:
     :param args:
     :param kwargs:
@@ -25,25 +28,30 @@ def update_order_status(request, *args, **kwargs):
     order_status_id = kwargs['order_status_id']
     if order_status_id == CONFIRM_ORDER_STATUS_ID:
         if validate_confirm_book_quantity(ordered_books_id_set):
-            update_book_quantity(ordered_books_id_set)
+            update_book_quantity(ordered_books_id_set, order_status_id)
         else:
             order_status_id = OrderStatus.objects.get(status_value='ILLEGIBLE').pk
+    elif order_status_id == CANCEL_ORDER_STATUS_ID:
+        update_book_quantity(ordered_books_id_set, order_status_id)
     CustomerOrder.objects.filter(pk=kwargs['pk']).update(order_status_id=order_status_id)
     customerorder = CustomerOrder.objects.get(pk=kwargs['pk'])
     return render(request, 'orders/order_details.html', {'customerorder': customerorder})
 
 
-def validate_confirm_book_quantity(book_set): #1
+def validate_confirm_book_quantity(book_set):
     for book in book_set:
         if BookState.objects.get(book_id=book).book_quantity == 0:
             return False
     return True
 
 
-def update_book_quantity(book_set): #2
+def update_book_quantity(book_set, order_status_id):
     for book in book_set:
         book_quantity = BookState.objects.get(book_id=book).book_quantity
-        BookState.objects.filter(book_id=book).update(book_quantity=book_quantity - 1)
+        if order_status_id == CONFIRM_ORDER_STATUS_ID:
+            BookState.objects.filter(book_id=book).update(book_quantity=book_quantity - 1)
+        elif order_status_id == CANCEL_ORDER_STATUS_ID:
+            BookState.objects.filter(book_id=book).update(book_quantity=book_quantity + 1)
 
 
 class OrdersView(ListView):

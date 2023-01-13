@@ -34,7 +34,7 @@
     {% else %}
         <button type="submit"><a href="{% url 'orders:update_order_status' customerorder.id 4 %} ">Complete </a></button>
     {% endif %}
-    <button type="submit">Cancel</button>
+    <button type="submit"><a href="{% url 'orders:update_order_status' customerorder.id 3 %}">Cancel</a></button>
 </div>
 
 
