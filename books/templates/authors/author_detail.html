@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% block content %}
 <head>
-    <meta charset="UTF-8">
     <title>{{ author.author_first_name }} {{ author.author_last_name }}</title>
 </head>
 <body>
@@ -16,4 +15,6 @@
     {% endfor %}
 </ul>
 </body>
-</html>
+
+
+{% endblock %}

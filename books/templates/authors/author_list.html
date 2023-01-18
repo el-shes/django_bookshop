@@ -1,38 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Authors</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<body>
-<h2>Check out our Authors</h2>
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Check out our Authors</h2>
 
-<div style="float:right">
-    <form>
-        <input type="text" placeholder="Search.." name="search"
-                {% if search %} value="{{ search }}" {% endif %}>
-        <button type="submit"><i class="fa fa-search"></i></button>
-        <a href="{% url 'books:all_authors' %}"><i class="fa fa-undo"></i></a>
-    </form>
-</div>
+    <div style="float:right">
+        <div class="container">
+            <form class="d-flex">
+                <input class="form-control me-2" type="text" placeholder="Author's Name" name="search"
+                       aria-label="search" {% if search %} value="{{ search }}" {% endif %}>
+                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-outline-primary" type="button"><a href="{% url 'books:all_authors' %}" style="text-decoration: none">Undo</a>
+                </button>
+            </form>
+        </div>
 
-<ul>
-    {% for author in author_list %}
-        <li>
-            {{ author.author_first_name }} {{ author.author_last_name }}
-            <a href={% url 'books:author_edit' author.id %}>Edit</a>
-            <a href={% url 'books:author_delete' author.id %}>Delete</a>
-        </li>
-    {% empty %}
-        <li>No authors yet.</li>
-    {% endfor %}
-</ul>
+        <div class="container">
+            <button type="button" class="btn btn-outline-dark"><a href="{% url 'books:author_create' %}" style="text-decoration: none">Add an New Author</a></button>
+        </div>
+    </div>
 
+    <div class="container">
+        <div class="row row-cols-3">
+            {% for author in author_list %}
+                <div class="col-6">
+                    <a href="{% url 'books:author_detail' author.id %}">{{ author.author_first_name }} {{ author.author_last_name }} </a>
+                </div>
+                <div class="col col-lg-2">
+                    <button type="button" class="btn btn-light"><a href={% url 'books:author_edit' author.id %}>Edit</a>
+                    </button>
+                </div>
+                <div class="col col-lg-2">
+                    <button type="button" class="btn btn-light"><a
+                            href={% url 'books:author_delete' author.id %}>Delete</a></button>
+                </div>
+            {% empty %}
+                <li>No authors yet.</li>
+            {% endfor %}
+        </div>
+    </div>
 
-<p>
-    <a href="{% url 'books:author_create' %}">Add an New Author</a>
-</p>
-
-</body>
-</html>
+{% endblock %}

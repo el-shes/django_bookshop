@@ -1,15 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Author</title>
-</head>
-<body>
-<h1>Edit Author Info</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Update"/>
-</form>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+    <head>
+        <title>Edit Author</title>
+    </head>
+
+    <body>
+    <h1>Edit Author Info</h1>
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Update"/>
+            <button type="button" class="btn btn-outline-secondary"><a href="{% url 'books:all_authors' %}">Cancel</a></button>
+        </form>
+    </div>
+
+{% endblock %}
