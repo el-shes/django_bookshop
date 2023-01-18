@@ -7,7 +7,7 @@ from django.db.models import Q
 
 class HomeView(TemplateView):
     model = Book
-    template_name = "books/home.html"
+    template_name = "home.html"
 
 
 class BookListView(View):
