@@ -1,20 +1,23 @@
 {% extends 'base.html' %}
+{% block title %}{{ author.author_first_name }} {{ author.author_last_name }}{% endblock %}
 {% block content %}
-<head>
-    <title>{{ author.author_first_name }} {{ author.author_last_name }}</title>
-</head>
-<body>
-<h1>{{ author.author_first_name }} {{ author.author_last_name }}</h1>
-<div></div>
-<p>
-    See all the {{ author.author_first_name }} {{ author.author_last_name }}'s books:
-</p>
-<ul>
-    {% for book in author.book_set.all %}
-        <li>{{ book }}</li>
-    {% endfor %}
-</ul>
-</body>
+    <div class="container">
+        <h1>{{ author.author_first_name }} {{ author.author_last_name }}</h1>
+        <div></div>
+        <p>
+            See all the {{ author.author_first_name }} {{ author.author_last_name }}'s books:
+        </p>
 
+        <button type="button" class="btn btn-outline-secondary"><a href="{% url 'books:all_authors' %}"
+                                                                   style="text-decoration: none">Go Back</a></button>
+
+        <div class="container">
+            <ul>
+                {% for book in author.book_set.all %}
+                    <li>{{ book }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 
 {% endblock %}
