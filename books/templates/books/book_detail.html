@@ -1,24 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ book.book_title }}</title>
-</head>
-<body>
-<h1>{{ book.book_title }}</h1>
-<div></div>
-<p>
-    The book is written by {{ book.book_author.first_name }} {{ book.book_author.last_name }}.
-    It was published on {{ book.publication_date }} by {{ book.publisher }}.
-    Total pages - {{ book.num_pages }}.
-</p>
-<p>
-    {%  for book_state in book.bookstate_set.all %}
-        Price - {{ book_state.book_price }}
-        <p>
-        Books left - {{ book_state.book_quantity }}
-        </p>
-    {% endfor %}
-</p>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}{{ book.book_title }}{% endblock %}
+{% block content %}
+
+    <div class="card text-center">
+        <div class="card-header">
+            Book details
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ book.book_title }}</h5>
+            <p class="card-text">The book is written
+                by {% for author in author_names %} {{ author.author_first_name }} {{ author.author_last_name }}. {% endfor %}</p>
+            <p class="card-text">It was published on {{ book.publication_date }} by {{ book.publisher }}.</p>
+            <p class="card-text">Total pages - {{ book.num_pages }}.</p>
+            {% for book_state in book.bookstate_set.all %}
+                <p class="card-text">Price - {{ book_state.book_price }}</p>
+                <p class="card-text">Books left - {{ book_state.book_quantity }}</p>
+            {% endfor %}
+            <a href="{% url 'books:all_books' %}" class="btn btn-primary">Go Back</a>
+            <a href="{% url 'books:book_edit' book.id %}" class="btn btn-primary">Edit Book</a>
+        </div>
+        <div class="card-footer text-muted">
+            2 days ago
+        </div>
+    </div>
+
+{% endblock %}

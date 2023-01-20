@@ -1,17 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Book Edit</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Book Edit{% endblock %}
+{% block content %}
 
-<h1>Edit Book: {{ book.book_title }}</h1>
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Update"/>
-</form>
+    <div style="float:left">
+        <div class="container">
+            <a href="{% url 'books:book_detail' book.id %}" class="btn btn-primary">Go Back</a>
+        </div>
+        <div class="container">
+            <a href="{% url 'books:all_books' %}" class="btn btn-primary">See all</a>
+        </div>
+    </div>
 
-</body>
-</html>
+    <div class="card text-center">
+        <div class="card-header">
+            <h2>Edit Book: {{ book.book_title }}</h2>
+        </div>
+        <div class="card-body">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Update"/>
+            </form>
+        </div>
+        <div class="card-footer text-muted">
+        </div>
+    </div>
+{% endblock %}

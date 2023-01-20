@@ -1,39 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>All Books</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<body>
-<h1>Books</h1>
+{% extends 'base.html' %}
+{% block title %}All Books{% endblock %}
+{% block content %}
+    <h1>Books</h1>
 
+    <div style="float:right">
+        <div class="container">
+            <form class="d-flex">
+                <input class="form-control me-2" type="text" placeholder="Book Title" name="search"
+                       aria-label="search" {% if search %} value="{{ search }}" {% endif %}>
+                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-outline-primary" type="button"><a href="{% url 'books:all_books' %}"
+                                                                         style="text-decoration: none">Undo</a>
+                </button>
+            </form>
+        </div>
 
-<div style="float:right">
-    <form>
-        <input type="text" placeholder="Search.." name="search"
-                {% if search %} value="{{ search }}" {% endif %}
-        >
-        <button type="submit"><i class="fa fa-search"></i></button>
-        <a href="{% url 'books:all_books' %}"><i class="fa fa-undo"></i></a>
-    </form>
-</div>
+        <div class="container">
+            <button type="button" class="btn btn-outline-dark"><a href="{% url 'books:book_create' %}"
+                                                                  style="text-decoration: none">Add New Book</a>
+            </button>
+        </div>
 
-<ul>
-    {% for book in book_list %}
-        <li>
-            <a href={% url 'books:book_detail' book.id %}> {{ book.book_title }}</a> by {{ book.book_author_updated }}
-            <a href={% url 'books:book_edit' book.id %}>Edit</a>
-            <a href="{% url 'books:book_delete' book.id %}">Delete</a>
-        </li>
-    {% empty %}
-        <li>No books yet.</li>
-    {% endfor %}
-</ul>
+    </div>
 
-<p>
-    <a href="{% url 'books:book_create' %}">Add an New Book</a>
-</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                {% for book in book_list %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><a
+                                    href="{% url 'books:book_detail' book.id %}"> {{ book.book_title }}</a></h5>
+                            <p class="card-text">by {{ book.book_author_updated }}</p>
+                            <a href="{% url 'books:book_edit' book.id %}" class="btn btn-light">Edit</a>
+                            <a href="{% url 'books:book_delete' book.id %}" class="btn btn-light">Delete</a>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">No books yet.</h5>
+                            <p class="card-text">Add a book to the Bookshop.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
-</body>
-</html>
+{% endblock %}

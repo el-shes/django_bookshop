@@ -41,6 +41,11 @@ class BookDetailedView(DetailView):
     model = Book
     template_name = "books/book_detail.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(BookDetailedView, self).get_context_data(**kwargs)
+        context['author_names'] = Book.objects.get(pk=kwargs['object'].id).book_author.values()
+        return context
+
 
 class CreateBookView(CreateView):
     model = Book
