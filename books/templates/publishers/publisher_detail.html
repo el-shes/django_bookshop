@@ -1,23 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ publisher.publisher_name }}</title>
-</head>
-<body>
-<h4>Check out all the books published by {{ publisher.publisher_name }}</h4>
+{% extends 'base.html' %}
+{% block title %}{{ publisher.publisher_name }}{% endblock %}
+{% block content %}
+    <h4>Check out all the books published by {{ publisher.publisher_name }}</h4>
 
-<ul>
-    {% for book in publisher.book_set.all  %}
-        <li>
-            {{ book.book_title}}
-        </li>
-    {% endfor %}
-</ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                {% for book in publisher.book_set.all %}
 
-<p>
-    <button class="button" onclick="location.href='{% url 'books:all_publishers' %}'"> Go back</button>
-</p>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><a
+                                    href="{% url 'books:book_detail' book.id %}"> {{ book.book_title }}</a></h5>
+                            <p class="card-text"> by {% for author in author_names %} {{ author.author_first_name }}
+                                {{ author.author_last_name }}; {% endfor %} </p>
+                        </div>
+                        <div class="card-footer"> {{ book.description }}
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">No books yet.</h5>
+                            <p class="card-text">Add a book to the Publishing House Collection.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
 
-</body>
-</html>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="container">
+            <a href="{% url 'books:all_publishers' %}" class="btn btn-primary">Go Back</a>
+        </div>
+    </div>
+{% endblock %}

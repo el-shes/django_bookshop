@@ -1,30 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Publisher</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<body>
-<h2>All Publishing Houses</h2>
+{% extends 'base.html' %}
+{% block title %}Publishers{% endblock %}
+{% block content %}
 
-<div style="float:right">
-    <form>
-        <input type="text" placeholder="Search.." name="search"
-                {% if search %} value="{{ search }}" {% endif %}>
-        <button type="submit"><i class="fa fa-search"></i></button>
-        <a href="{% url 'books:all_publishers' %}"><i class="fa fa-undo"></i></a>
-    </form>
-</div>
+    <h2>All Publishing Houses</h2>
 
-<ul>
-    {% for publisher in publisher_list %}
-        <li>
-            <a href={% url 'books:publisher_detail' publisher.id %}>{{ publisher.publisher_name }}</a>
-            <a href={% url 'books:publisher_edit' publisher.id %}>Edit</a>
-            <a href={% url 'books:publisher_delete' publisher.id %}>Delete</a>
-        </li>
-    {% endfor %}
-</ul>
-</body>
-</html>
+    <div style="float:right">
+        <div class="container">
+            <form class="d-flex">
+                <input class="form-control me-2" type="text" placeholder="Publishers" name="search"
+                       aria-label="search" {% if search %} value="{{ search }}" {% endif %}>
+                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-outline-primary" type="button"><a href="{% url 'books:all_publishers' %}" style="text-decoration: none">Undo</a>
+                </button>
+            </form>
+        </div>
+
+    <div class="container">
+            <button type="button" class="btn btn-outline-dark"><a href="" style="text-decoration: none">Add an New Publishing House</a></button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row row-cols-3">
+            {% for publisher in publisher_list %}
+                <div class="col-6">
+                    <a href={% url 'books:publisher_detail' publisher.id %}>{{ publisher.publisher_name }}</a>
+                </div>
+                <div class="col col-lg-2">
+                    <button type="button" class="btn btn-light"><a href={% url 'books:publisher_edit' publisher.id %}>Edit</a>
+                    </button>
+                </div>
+                <div class="col col-lg-2">
+                    <button type="button" class="btn btn-light"><a href={% url 'books:publisher_delete' publisher.id %}>Delete</a></button>
+                </div>
+            {% empty %}
+                <li>No Publishing houses yet.</li>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

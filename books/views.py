@@ -126,6 +126,11 @@ class PublisherDetailView(DetailView):
     model = Publisher
     template_name = 'publishers/publisher_detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(PublisherDetailView, self).get_context_data(**kwargs)
+        context['author_names'] = Book.objects.get(publisher_id=kwargs['object'].id).book_author.values()
+        return context
+
 
 class EditPublisherView(UpdateView):
     model = Publisher
