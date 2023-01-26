@@ -1,20 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Delete Book</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Delete Book {% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="mt-5">
+            <span class="border border-warning">
+                <div class="row justify-content-md-center">
+                    <div class="col-md-auto">
+                        <h1>Delete The Book</h1>
 
-<h1>Delete The Book</h1>
+                        <p>Are you sure you want to delete the book: {{ book }}?</p>
 
-<p>Are you sure you want to delete the book: {{ book }}?</p>
-
-<form action="" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="Yes, delete.">
-    <input type="submit" value="Cancel" onclick="window.location.href='{% url 'books:all_books' %}';return false;">
-</form>
-
-</body>
-</html>
+                        <form action="" method="POST">
+                        {% csrf_token %}
+                            <input type="submit" value="Yes, delete.">
+                            <input type="submit" value="Cancel" onclick="window.location.href='{% url 'books:all_books' %}';return false;">
+                        </form>
+                    </div>
+                </div>
+            </span>
+        </div>
+    </div>
+{% endblock %}

@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Edit {{ publisher.publisher_name }}{% endblock %}
+{% block content %}
 
-</body>
-</html>
+    <div style="float:left">
+        <div class="container">
+            <a href="{% url 'books:publisher_detail' publisher.id %}" class="btn btn-primary">Go Back</a>
+        </div>
+        <div class="container">
+            <a href="{% url 'books:all_publishers' %}" class="btn btn-primary">See all</a>
+        </div>
+    </div>
+
+    <div class="card text-center">
+        <div class="card-header">
+            <h2>Edit Publisher: {{ publisher.publisher_name }}</h2>
+        </div>
+        <div class="card-body">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Update"/>
+            </form>
+        </div>
+        <div class="card-footer text-muted">
+        </div>
+    </div>
+
+{% endblock %}

@@ -59,7 +59,7 @@ class OrdersView(ListView):
     template_name = 'orders/order_list.html'
 
     def get_queryset(self):
-        query = self.request.GET.get('q')
+        query = self.request.GET.get('search')
         if query:
             object_list = self.model.objects.filter(Q(customer__first_name__icontains=query) |
                                                     Q(customer__last_name__icontains=query))

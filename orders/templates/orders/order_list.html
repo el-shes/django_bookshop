@@ -1,66 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>All orders</title>
-</head>
-<body>
-<h1> List of all Orders for Manager</h1>
+{% extends 'base.html' %}
+{% block title %}All Orders{% endblock %}
+{% block content %}
+    <div style="margin-top: 20px" class="d-flex flex-row-reverse">
+        <div style="width: 33%" class="d-flex flex-column">
+            <div class="container" style="margin-bottom: 5px">
+                <form class="d-flex">
+                    <input class="form-control me-2" type="text" placeholder="Customer" name="search"
+                           aria-label="search" {% if search %} value="{{ search }}" {% endif %}>
+                    <button class="btn btn-outline-success" style="margin-right: 3px" type="submit">Search</button>
+                    <button class="btn btn-outline-primary" type="button"><a href="{% url 'orders:all_orders' %}"
+                                                                             style="text-decoration: none">Undo</a>
+                    </button>
+                </form>
+            </div>
 
-<div style="display: flex; flex-direction: column">
-    <div style="display: flex; flex-direction: row; justify-content: space-between">
-        <div style="float: left">
-            <button type="submit"><a href="{% url 'orders:new_order' %}">Create new order</a></button>
-        </div>
-        <div style="float:right ">
-            <form method="GET">
-                <input type="text" placeholder="Search.." name="q"
-                        {% if q %} value="{{ request.GET.q }}" {% endif %}
-                >
-                <button type="submit">Submit</button>
-                <button type='submit'><a href="{% url 'orders:all_orders' %}">Undo</a></button>
-            </form>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div style="float: right">
-            <form method="GET">
-                {% for status in order_statuses %}
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" {% if status.status_value in marked_status %}checked{% endif %}
-                               class="custom-control-input" id="{{ status.status_value }}" name="order_status"
-                               value="{{ status.status_value }}">
-                        <label class="custom-control-label" for="{{ status.status_value }}"
-                               style="cursor: pointer;">{{ status.status_value }}</label>
+            <div class="container" style="margin-bottom: 5px">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Filter status</h5>
+                        <form method="GET">
+                            {% for status in order_statuses %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                           {% if status.status_value in marked_status %}checked{% endif %}
+                                           id="{{ status.status_value }}" name="order_status"
+                                           value="{{ status.status_value }}">
+                                    <label class="form-check-label" for="{{ status.status_value }}"
+                                           style="cursor: pointer;">
+                                        {{ status.status_value }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                            <button type="submit" class="btn btn-info">Filter by Status</button>
+                        </form>
                     </div>
-                {% endfor %}
-                <button type="submit">Filter by Status</button>
-            </form>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="card">
+                    <div class="card-body">
+                        <button type="submit" class="btn btn-warning"><a href="{% url 'orders:new_order' %}"
+                                                                         style="text-decoration: none">Create new
+                            order</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <div style="width: 67%">
+            <section class="section">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <h3>List of all Orders for Manager</h3>
+                                </div>
+                                <div style="display: block">
+                                    <div class="row">
+                                        {% if customerorder_list %}
+                                            {% for order in customerorder_list %}
+                                                <div class="col-lg-10">
+                                                    <p>
+                                                        {{ order.order_date }}
+                                                        {% for book in order.ordered_books.all %}
+                                                            {{ book.book_title }}
+                                                            {% if not forloop.last %}
+                                                                ,
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        ordered by
+                                                        <b>{{ order.customer.first_name }} {{ order.customer.last_name }} </b>
+
+                                                    </p>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <a href={% url 'orders:order_details' order.id %}>See details</a>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
 
     </div>
-
-    <div style="display: block">
-        {% if customerorder_list %}
-            {% for order in customerorder_list %}
-                <p>
-                    {{ order.order_date }}
-                    {% for book in order.ordered_books.all %}
-                        {{ book.book_title }}
-                        {% if not forloop.last %}
-                            ,
-                        {% endif %}
-                    {% endfor %}
-                    ordered by <b>{{ order.customer.first_name }} {{ order.customer.last_name }} </b>
-                    <a href={% url 'orders:order_details' order.id %}>See details</a>
-                </p>
-            {% endfor %}
-        {% else %}
-            <p>No orders yet.</p>
-        {% endif %}
-    </div>
-</div>
-</body>
-</html>
+{% endblock %}

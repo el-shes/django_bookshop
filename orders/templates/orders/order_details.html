@@ -1,42 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>#{{ customerorder.pk }} Order Detail</title>
-</head>
-<body>
-<h2> Order #{{ customerorder.pk }}, {{ customerorder.order_date }}</h2>
-<h4> by {{ customerorder.customer.first_name }} {{ customerorder.customer.last_name }}</h4>
-
-
-<div style="float:right ">
-    Status : {{ customerorder.order_status }}
-</div>
-
-<div style="display: block">
-
-    Books :
-    <ul>
-        {% for book in customerorder.ordered_books.all %}
-            <li>{{ book }}</li>
-        {% endfor %}
-    </ul>
-
-</div>
-
-<div>
-    Total price : {{ customerorder.full_price }}
-</div>
-
-<div>
-    {% if customerorder.order_status_id == 1  %}
-        <button type="submit"><a href="{% url 'orders:update_order_status' customerorder.id 2 %}"> Confirm Order</a></button>
-    {% else %}
-        <button type="submit"><a href="{% url 'orders:update_order_status' customerorder.id 4 %} ">Complete </a></button>
-    {% endif %}
-    <button type="submit"><a href="{% url 'orders:update_order_status' customerorder.id 3 %}">Cancel</a></button>
-</div>
-
-
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}#{{ customerorder.pk }} Order Detail{% endblock %}
+{% block content %}
+    <div class="container" style="margin-top: 10px; position: center">
+        <div class="card" style="width:60rem">
+            <div class="card-header text-center">Order #{{ customerorder.pk }}, {{ customerorder.order_date }}</div>
+            <div class="card-body">
+                <h6>by {{ customerorder.customer.first_name }} {{ customerorder.customer.last_name }}</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-10">
+                        Books :
+                        <ul class="list-group list-group-flush">
+                            {% for book in customerorder.ordered_books.all %}
+                                <li class="list-group-item">{{ book }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="alert alert-info">
+                            Status : {{ customerorder.order_status }}
+                        </div>
+                    </div>
+                    <div class="co-lg-12">
+                        <div class="alert alert-warning">
+                            Total price : {{ customerorder.full_price }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-lg-6">
+                        {% if customerorder.order_status_id == 1 %}
+                        <button class="btn btn-outline-success" style="margin-right: 3px" type="submit">
+                            <a href="{% url 'orders:update_order_status' customerorder.id 2 %}"
+                               style="text-decoration: none">
+                                Confirm Order</a>
+                        </button>
+                        {% else %}
+                        <button class="btn btn-outline-success" type="submit"><a
+                                href="{% url 'orders:update_order_status' customerorder.id 4 %}"
+                                style="text-decoration: none">Complete </a>
+                        </button>
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-6">
+                        <button class="btn btn-outline-primary" type="submit">
+                            <a href="{% url 'orders:update_order_status' customerorder.id 3 %}" style="text-decoration: none">
+                                Cancel</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
