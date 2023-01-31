@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.db.models import Q
 from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import BookState, OrderStatus
 
 from orders.models import CustomerOrder
@@ -54,7 +55,7 @@ def update_book_quantity(book_set, order_status_id):
             BookState.objects.filter(book_id=book).update(book_quantity=book_quantity + 1)
 
 
-class OrdersView(ListView):
+class OrdersView(LoginRequiredMixin, ListView):
     model = CustomerOrder
     template_name = 'orders/order_list.html'
 
