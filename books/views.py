@@ -3,11 +3,17 @@ from django.views import View
 from django.views.generic import TemplateView, DetailView, CreateView, DeleteView, UpdateView, ListView
 from .models import Book, Author, Publisher
 from django.db.models import Q
+from orders.models import BookState
 
 
 class HomeView(TemplateView):
     model = Book
     template_name = "home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['best_selling_book'] = BookState.objects.order_by('sold_copy_number')[:1]
+        return context
 
 
 class BookListView(View):

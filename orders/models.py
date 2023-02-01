@@ -7,6 +7,7 @@ class BookState(models.Model):
     book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
     book_price = models.FloatField()
     book_quantity = models.PositiveIntegerField()
+    sold_copy_number = models.IntegerField(default=0)
 
     def __str__(self):
         return self.book_id.book_title

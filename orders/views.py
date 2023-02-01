@@ -9,6 +9,7 @@ from orders.models import CustomerOrder
 
 CONFIRM_ORDER_STATUS_ID = 2
 CANCEL_ORDER_STATUS_ID = 3
+COMPLETE_ORDER_STATUS_ID = 4
 
 
 def count_total_price(list_of_prices):
@@ -34,6 +35,8 @@ def update_order_status(request, *args, **kwargs):
             order_status_id = OrderStatus.objects.get(status_value='ILLEGIBLE').pk
     elif order_status_id == CANCEL_ORDER_STATUS_ID:
         update_book_quantity(ordered_books_id_set, order_status_id)
+    elif order_status_id == COMPLETE_ORDER_STATUS_ID:
+        update_book_quantity(ordered_books_id_set, order_status_id)
     CustomerOrder.objects.filter(pk=kwargs['pk']).update(order_status_id=order_status_id)
     customerorder = CustomerOrder.objects.get(pk=kwargs['pk'])
     return render(request, 'orders/order_details.html', {'customerorder': customerorder})
@@ -49,10 +52,14 @@ def validate_confirm_book_quantity(book_set):
 def update_book_quantity(book_set, order_status_id):
     for book in book_set:
         book_quantity = BookState.objects.get(book_id=book).book_quantity
+        number_of_sold_copies = BookState.objects.get(book_id=book).sold_copy_number
         if order_status_id == CONFIRM_ORDER_STATUS_ID:
             BookState.objects.filter(book_id=book).update(book_quantity=book_quantity - 1)
         elif order_status_id == CANCEL_ORDER_STATUS_ID:
             BookState.objects.filter(book_id=book).update(book_quantity=book_quantity + 1)
+            BookState.objects.filter(book_id=book).update(sold_copy_number=number_of_sold_copies - 1)
+        elif order_status_id == COMPLETE_ORDER_STATUS_ID:
+            BookState.objects.filter(book_id=book).update(sold_copy_number=number_of_sold_copies + 1)
 
 
 class OrdersView(LoginRequiredMixin, ListView):
