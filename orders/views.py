@@ -49,6 +49,10 @@ def validate_confirm_book_quantity(book_set):
     return True
 
 
+def validate_sold_copy_number():
+    return
+
+
 def update_book_quantity(book_set, order_status_id):
     for book in book_set:
         book_quantity = BookState.objects.get(book_id=book).book_quantity

@@ -19,7 +19,7 @@
                     <a class="nav-item nav-link ">User: {{ user.username }}</a>
                     <a class="nav-item nav-link active" href="{% url 'logout' %}?next={{ request.path }}">Logout</a>
                 {% else %}
-                    <a class="nav-item nav-link active" href="{% url 'login' %}?next={{ request.path }}">Login</a>
+                    <a class="nav-item nav-link active" href="{% url 'login' %}">Login</a>
                     {#                    <a class="nav-item nav-link active" href="{% url 'register' %}?next={{ request.path }}">Register</a>#}
                 {% endif %}
 
