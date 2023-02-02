@@ -11,7 +11,7 @@
             <div class="row g-0">
                 <div class="col-md-4">
                     {% load static %}
-                    <img src="{% static 'bookshop/best_seller.png' %}" class="img-fluid rounded-start"
+                    <img src="{% static 'best_seller.png' %}" class="img-fluid rounded-start"
                          alt="Best Seller">
                 </div>
                 <div class="col-md-8">
@@ -20,6 +20,7 @@
                         {% for book in best_selling_book %}
                             <p class="card-text">{{ book }} written by </p>
                         {% endfor %}
+                    <a href="#" class="btn btn-primary">Order Now</a>
                     </div>
                 </div>
             </div>

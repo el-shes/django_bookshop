@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import TemplateView, DetailView, CreateView, DeleteView, UpdateView, ListView
+from django.views.generic import TemplateView, DetailView, CreateView, DeleteView, UpdateView
 from .models import Book, Author, Publisher
 from django.db.models import Q
 from orders.models import BookState
