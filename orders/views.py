@@ -1,7 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.db.models import Q
-from django.views.generic import ListView, DetailView, CreateView
+from django.urls import reverse
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import BookState, OrderStatus
 
@@ -50,6 +51,7 @@ def validate_confirm_book_quantity(book_set):
 
 
 def validate_sold_copy_number():
+    # TODO : finish validation
     return
 
 
@@ -113,3 +115,13 @@ class CreateOrder(CreateView):
         form.instance.full_price = count_total_price(list_ordered_prices)
         super(CreateOrder, self).form_valid(form)
         return HttpResponseRedirect(self.get_success_url())
+
+
+class UpdatePrice(UpdateView):
+    model = BookState
+    fields = ['book_price']
+    template_name = "orders/price_update.html"
+
+    def get_success_url(self):
+        pk = self.kwargs["pk"]
+        return reverse("books:book_detail", kwargs={"pk": pk})

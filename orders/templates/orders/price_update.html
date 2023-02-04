@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Price Update{% endblock %}
+{% block content %}
+
+    <div style="float:left">
+        <div class="container">
+            <a href="{% url 'books:book_detail' bookstate.id %}" class="btn btn-primary">Go Back</a>
+        </div>
+        <div class="container">
+            <a href="{% url 'books:all_books' %}" class="btn btn-primary">See all Books</a>
+        </div>
+    </div>
+
+    <div class="card text-center">
+        <div class="card-header">
+            <h2>Update Book Price: {{ book.book_title }}</h2>
+        </div>
+        <div class="card-body">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Update"/>
+            </form>
+        </div>
+        <div class="card-footer text-muted">
+        </div>
+    </div>
+{% endblock %}

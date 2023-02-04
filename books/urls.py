@@ -1,5 +1,6 @@
 from django.urls import path, reverse_lazy
 from . import views
+from orders.views import UpdatePrice
 
 app_name = 'books'
 
@@ -12,6 +13,8 @@ urlpatterns = [
     path('book/new', views.CreateBookView.as_view(success_url=reverse_lazy('books:all_books')), name='book_create'),
     path('book/<int:pk>/edit', views.EditBookView.as_view(success_url=reverse_lazy('books:all_books')), name='book_edit'),
     path('book/<int:pk>/delete', views.DeleteBookView.as_view(success_url=reverse_lazy('books:all_books')), name='book_delete'),
+
+    path('book/<int:pk>/price_update', UpdatePrice.as_view(success_url=reverse_lazy('books:book_detail')), name='price_update'),
 
     path('author', views.AuthorListView.as_view(), name='all_authors'),
     path('author/<int:pk>', views.AuthorDetailView.as_view(), name='author_detail'),

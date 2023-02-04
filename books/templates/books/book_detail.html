@@ -20,8 +20,10 @@
                 {% endif %}
             {% endfor %}
             <a href="{% url 'books:all_books' %}" class="btn btn-primary">Go Back</a>
-            {% if user.is_authenticated %}
+            {% if user.is_staff %}
                 <a href="{% url 'books:book_edit' book.id %}" class="btn btn-primary">Edit Book</a>
+                <a href="{% url 'books:price_update' book.id %}" class="btn btn-primary">Update Price</a>
+                <a href="{% url 'books:quantity_update' book.id %}" class="btn btn-primary">Update Quantity</a>
             {% endif %}
         </div>
         <div class="card-footer text-muted">
