@@ -125,3 +125,13 @@ class UpdatePrice(UpdateView):
     def get_success_url(self):
         pk = self.kwargs["pk"]
         return reverse("books:book_detail", kwargs={"pk": pk})
+
+
+class UpdateQuantity(UpdateView):
+    model = BookState
+    fields = ['book_quantity']
+    template_name = "orders/quantity_update.html"
+
+    def get_success_url(self):
+        pk = self.kwargs["pk"]
+        return reverse("books:book_detail", kwargs={"pk": pk})

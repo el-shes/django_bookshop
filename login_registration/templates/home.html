@@ -9,12 +9,12 @@
     <div class="container">
         <div class="card mb-3">
             <div class="row g-0">
-                <div class="col-md-4">
+                <div class="col-md-2">
                     {% load static %}
                     <img src="{% static 'best_seller.png' %}" class="img-fluid rounded-start"
                          alt="Best Seller">
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-4">
                     <div class="card-body">
                         <h5 class="card-title">Best selling book of all times!</h5>
                         {% for book in best_selling_book %}
