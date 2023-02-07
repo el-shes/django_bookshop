@@ -30,7 +30,8 @@
                                     {% csrf_token %}
                                     <div class="col-12">
                                         <label for="first_name" class="form-label">Your First Name</label>
-                                        <input type="text" name="first_name" class="form-control" id="first_name">
+                                        <input type="text" name="first_name" class="form-control" id="first_name"
+                                               {% if form.errors %} value="{{ form.first_name.value }}" {% endif %}>
                                         <div class="invalid-feedback">Please, enter your name!</div>
                                     </div>
 
@@ -45,7 +46,7 @@
                                     <div class="col-12">
                                         <label for="last_name" class="form-label">Your Last Name</label>
                                         <input type="text" name="last_name" class="form-control" id="last_name"
-                                               required="">
+                                               {% if form.errors %}value="{{ form.last_name.value }}"{% endif %}>
                                         <div class="invalid-feedback">Please, enter your name!</div>
                                     </div>
 
@@ -60,7 +61,7 @@
                                     <div class="col-12">
                                         <label for="email" class="form-label">Your Email</label>
                                         <input type="email" name="email" class="form-control" id="email"
-                                               required="">
+                                               {% if form.errors %}value="{{ form.email.value }}" {% endif %}>
                                         <div class="invalid-feedback">Please enter a valid Email address!</div>
                                     </div>
 
@@ -77,7 +78,7 @@
                                         <div class="input-group has-validation">
                                             <span class="input-group-text" id="inputGroupPrepend">@</span>
                                             <input type="text" name="username" class="form-control" id="username"
-                                                   required="">
+                                                   {% if form.errors %}value="{{ form.username.value }}"{% endif %}>
                                             <div class="invalid-feedback">Please choose a username.</div>
                                         </div>
                                     </div>
@@ -107,8 +108,7 @@
 
                                     <div class="col-12">
                                         <label for="password2" class="form-label">Password confirmation</label>
-                                        <input type="password" name="password2" class="form-control" id="password2"
-                                               required="">
+                                        <input type="password" name="password2" class="form-control" id="password2">
                                         <div class="invalid-feedback">Please enter your password!</div>
                                     </div>
 
