@@ -25,6 +25,7 @@ urlpatterns = [
 
     path('publisher', views.PublisherListView.as_view(), name='all_publishers'),
     path('publisher/<int:pk>', views.PublisherDetailView.as_view(), name='publisher_detail'),
+    path('publisher/new', views.CreatePublisherView.as_view(success_url=reverse_lazy('books:all_publishers')), name='publisher_create'),
     path('publisher/<int:pk>/edit', views.EditPublisherView.as_view(success_url=reverse_lazy('books:all_publishers')), name='publisher_edit'),
     path('publisher/<int:pk>/delete', views.DeletePublisherView.as_view(success_url=reverse_lazy('books:all_publishers')), name='publisher_delete'),
 

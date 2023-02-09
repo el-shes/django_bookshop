@@ -138,6 +138,12 @@ class PublisherDetailView(DetailView):
         return context
 
 
+class CreatePublisherView(CreateView):
+    model = Publisher
+    template_name = 'publishers/publisher_create.html'
+    fields = '__all__'
+
+
 class EditPublisherView(UpdateView):
     model = Publisher
     template_name = 'publishers/publisher_edit.html'
