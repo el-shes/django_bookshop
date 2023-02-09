@@ -18,7 +18,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Best selling book of all times!</h5>
                         {% for book in best_selling_book %}
-                            <p class="card-text">{{ book }} written by </p>
+                            <p class="card-text">{{ book }} written by {{ author_names }}</p>
                         {% endfor %}
                     <a href="#" class="btn btn-primary">Order Now</a>
                     </div>

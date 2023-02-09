@@ -13,6 +13,8 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         context['best_selling_book'] = BookState.objects.order_by('sold_copy_number')[:1]
+        book_id = BookState.objects.order_by('sold_copy_number')[:1].values('book_id')
+        context['author_names'] = Author.objects.get(book__book_author__book=book_id)
         return context
 
 
