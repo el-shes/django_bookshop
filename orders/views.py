@@ -112,6 +112,7 @@ class CreateOrder(CreateView):
         list_ordered_prices = []
         for book_id in list_ordered_books_id:
             list_ordered_prices.append(BookState.objects.get(book_id=book_id).book_price)
+        form.instance.created_by_id = self.request.user.id
         form.instance.full_price = count_total_price(list_ordered_prices)
         super(CreateOrder, self).form_valid(form)
         return HttpResponseRedirect(self.get_success_url())
