@@ -13,8 +13,17 @@ CANCEL_ORDER_STATUS_ID = 3
 COMPLETE_ORDER_STATUS_ID = 4
 
 
-def count_total_price(list_of_prices):
-    return sum(list_of_prices)
+def count_total_order_price(form):
+    """
+    collect the list of ordered_books_id s, collect their prices and sum them up
+    :param form: form with ordered_books
+    :return: sum of prices of ordered_books
+    """
+    list_ordered_books_id = form["ordered_books"].value()
+    list_ordered_prices = []
+    for book_id in list_ordered_books_id:
+        list_ordered_prices.append(BookState.objects.get(book_id=book_id).book_price)
+    return sum(list_ordered_prices)
 
 
 def update_order_status(request, *args, **kwargs):
@@ -101,20 +110,30 @@ class DetailOrder(DetailView):
         return context
 
 
-class CreateOrder(CreateView):
+class CreateOrderAdmin(CreateView):
     model = CustomerOrder
     template_name = 'orders/create_order.html'
     fields = ['customer', 'ordered_books']
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
-        list_ordered_books_id = self.get_form()["ordered_books"].value()
-        list_ordered_prices = []
-        for book_id in list_ordered_books_id:
-            list_ordered_prices.append(BookState.objects.get(book_id=book_id).book_price)
         form.instance.created_by_id = self.request.user.id
-        form.instance.full_price = count_total_price(list_ordered_prices)
-        super(CreateOrder, self).form_valid(form)
+        form.instance.full_price = count_total_order_price(form)
+        super(CreateOrderAdmin, self).form_valid(form)
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class CreateOrderCustomer(CreateView):
+    model = CustomerOrder
+    template_name = 'orders/create_order.html'
+    fields = ['ordered_books']
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        form.instance.created_by_id = self.request.user.id
+        form.instance.customer_id = self.request.user.id
+        form.instance.full_price = count_total_order_price(form)
+        super(CreateOrderCustomer, self).form_valid(form)
         return HttpResponseRedirect(self.get_success_url())
 
 
