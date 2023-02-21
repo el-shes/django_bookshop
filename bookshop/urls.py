@@ -24,6 +24,7 @@ urlpatterns = [
                   path('', include('books.urls')),
                   path('orders/', include('orders.urls')),
                   path('login/', include('login_registration.urls')),
+                  path('oauth/', include('social_django.urls', namespace='social')),
 
                   path('accounts/', include('django.contrib.auth.urls')),
 
