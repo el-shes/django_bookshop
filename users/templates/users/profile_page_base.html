@@ -30,13 +30,16 @@
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" data-bs-toggle="tab"
                                             data-bs-target="#profile-overview" aria-selected="true" role="tab">
-                                        Overview
+                                        <a href="{% url 'users:profile_page' user.id %}" style="color:inherit; text-decoration: none">
+                                            Overview</a>
                                     </button>
                                 </li>
 
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit"
-                                            aria-selected="false" role="tab" tabindex="-1">Edit Profile
+                                            aria-selected="false" role="tab" tabindex="-1">
+                                        <a href="{% url 'users:edit_profile_page' user.id %}" style="color:inherit; text-decoration: none">Edit
+                                            Profile</a>
                                     </button>
                                 </li>
 
@@ -50,14 +53,13 @@
                             </ul>
 
                             <div class="tab-content pt-2">
-                                {# if profile_page = overview #}
-                                {% include 'users/profile_page_overview.html' %}
-{#                                {% block overview %}#}
-{#                                {% endblock overview %}#}
-                                {# else if profile_page = edit #}
-                                {% include 'users/profile_page_edit_info.html' %}
-                                {# else if profile_page = change_password #}
-                                {% include 'users/profile_page_reset_password.html' %}
+                                {% if include_section == "overview" %}
+                                    {% include 'users/profile_page_overview.html' %}
+                                {% elif include_section == "info_update" %}
+                                    {% include 'users/profile_page_edit_info.html' %}
+                                {% elif include_section == "change_password" %}
+                                    {% include 'users/profile_page_reset_password.html' %}
+                                {% endif %}
                             </div>
 
                         </div>
