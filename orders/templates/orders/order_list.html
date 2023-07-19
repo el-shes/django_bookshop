@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}All Orders{% endblock %}
 {% block content %}
+
     <div style="margin-top: 20px" class="d-flex flex-row-reverse">
         <div style="width: 33%" class="d-flex flex-column">
             <div class="container" style="margin-bottom: 5px">
@@ -41,16 +42,16 @@
                 <div class="card">
                     <div class="card-body">
                         <button type="submit" class="btn btn-warning">
-                            {% if user.is_staff %}<a href="{% url 'orders:new_order' %}"
-                            {% else %}<a href="{% url 'orders:new_customer_order' user.id %}"
-                            style="text-decoration: none"{% endif %}>Create new order</a>
+                            {% if user.is_staff %}<a href="{% url 'orders:new_order' %}">
+                            {% else %}<a href="{% url 'orders:new_customer_order' user.id %}"style="text-decoration: none"{% endif %}>
+                                Create new order</a>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div style="width: 67%">
+        <div style="margin-left:20px; width: 67%">
             <section class="section">
                 <div class="row">
                     <div class="col-lg-12">

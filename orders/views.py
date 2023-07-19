@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import BookState, OrderStatus
+from .forms import CustomerOrderForm
 
 from orders.models import CustomerOrder
 
@@ -112,8 +113,9 @@ class DetailOrder(DetailView):
 
 class CreateOrderAdmin(CreateView):
     model = CustomerOrder
+    form_class = CustomerOrderForm
     template_name = 'orders/create_order.html'
-    fields = ['customer', 'ordered_books']
+    # fields = ['customer', 'ordered_books']
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
